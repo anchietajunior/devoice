@@ -8,18 +8,6 @@ struct FloatingOverlay: View {
             Circle()
                 .fill(stateColor)
                 .frame(width: 12, height: 12)
-                .overlay(
-                    Circle()
-                        .stroke(stateColor.opacity(0.5), lineWidth: 2)
-                        .scaleEffect(appState.state == .recording ? 1.5 : 1.0)
-                        .opacity(appState.state == .recording ? 0 : 1)
-                        .animation(
-                            appState.state == .recording
-                                ? .easeOut(duration: 1).repeatForever(autoreverses: false)
-                                : .default,
-                            value: appState.state
-                        )
-                )
 
             Text(stateText)
                 .font(.system(size: 13, weight: .medium))
