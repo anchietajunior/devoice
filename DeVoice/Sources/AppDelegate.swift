@@ -91,11 +91,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             )
             settingsWindow?.title = "DeVoice - Configurações"
             settingsWindow?.contentView = NSHostingView(rootView: settingsView)
+            settingsWindow?.level = .floating
             settingsWindow?.center()
         }
 
-        settingsWindow?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+        settingsWindow?.makeKeyAndOrderFront(nil)
     }
 
     private func showError(_ message: String) {
