@@ -78,11 +78,11 @@ enum WhisperServiceError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidAPIKey:
-            return "API Key inválida. Verifique suas configurações."
+            return "Invalid API Key. Check your settings."
         case .invalidResponse:
-            return "Resposta inválida do servidor."
+            return "Invalid server response."
         case .apiError(let message):
-            return "Erro da API: \(message)"
+            return "API Error: \(message)"
         }
     }
 }

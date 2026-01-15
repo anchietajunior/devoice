@@ -8,7 +8,7 @@ struct SettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            Text("Configurações")
+            Text("Settings")
                 .font(.title2)
                 .fontWeight(.semibold)
 
@@ -31,7 +31,7 @@ struct SettingsView: View {
                     .buttonStyle(.borderless)
                 }
 
-                Text("Sua API key é armazenada de forma segura no Keychain.")
+                Text("Your API key is stored securely in the Keychain.")
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
@@ -39,16 +39,16 @@ struct SettingsView: View {
             Divider()
 
             VStack(alignment: .leading, spacing: 8) {
-                Text("Permissões")
+                Text("Permissions")
                     .font(.headline)
 
                 HStack {
                     Image(systemName: TextInjector.checkAccessibilityPermission() ? "checkmark.circle.fill" : "xmark.circle.fill")
                         .foregroundColor(TextInjector.checkAccessibilityPermission() ? .green : .red)
-                    Text("Acessibilidade")
+                    Text("Accessibility")
                     Spacer()
                     if !TextInjector.checkAccessibilityPermission() {
-                        Button("Habilitar") {
+                        Button("Enable") {
                             TextInjector.requestAccessibilityPermission()
                         }
                     }
@@ -59,12 +59,12 @@ struct SettingsView: View {
 
             HStack {
                 Spacer()
-                Button("Cancelar") {
+                Button("Cancel") {
                     dismiss()
                 }
                 .keyboardShortcut(.cancelAction)
 
-                Button("Salvar") {
+                Button("Save") {
                     appState.saveAPIKey(apiKeyInput)
                     dismiss()
                 }

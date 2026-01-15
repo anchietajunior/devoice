@@ -20,9 +20,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         updateStatusIcon(state: .idle)
 
         let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "Configurações...", action: #selector(openSettings), keyEquivalent: ","))
+        menu.addItem(NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: ","))
         menu.addItem(NSMenuItem.separator())
-        menu.addItem(NSMenuItem(title: "Sair", action: #selector(quit), keyEquivalent: "q"))
+        menu.addItem(NSMenuItem(title: "Quit", action: #selector(quit), keyEquivalent: "q"))
         statusItem.menu = menu
     }
 
@@ -89,7 +89,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 backing: .buffered,
                 defer: false
             )
-            settingsWindow?.title = "DeVoice - Configurações"
+            settingsWindow?.title = "DeVoice - Settings"
             settingsWindow?.contentView = NSHostingView(rootView: settingsView)
             settingsWindow?.level = .floating
             settingsWindow?.center()
@@ -101,7 +101,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func showError(_ message: String) {
         let alert = NSAlert()
-        alert.messageText = "Erro"
+        alert.messageText = "Error"
         alert.informativeText = message
         alert.alertStyle = .warning
         alert.addButton(withTitle: "OK")

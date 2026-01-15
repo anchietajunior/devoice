@@ -46,7 +46,7 @@ class VoiceController {
 
         let hasPermission = await AudioRecorder.requestPermission()
         guard hasPermission else {
-            appState.setError("Permissao de microfone negada.")
+            appState.setError("Microphone permission denied.")
             return
         }
 
@@ -55,7 +55,7 @@ class VoiceController {
             appState.setState(.recording)
             floatingWindow.show()
         } catch {
-            appState.setError("Erro ao iniciar gravacao: \(error.localizedDescription)")
+            appState.setError("Failed to start recording: \(error.localizedDescription)")
         }
     }
 
@@ -71,7 +71,7 @@ class VoiceController {
         appState.setState(.processing)
 
         guard !appState.apiKey.isEmpty else {
-            appState.setError("API Key nao configurada.")
+            appState.setError("API Key not configured.")
             appState.setState(.idle)
             floatingWindow.hide()
             audioRecorder.cleanup()
