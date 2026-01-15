@@ -2,6 +2,10 @@
 
 A native macOS menu bar app that converts your voice to text using OpenAI's Whisper API. Hold the **fn** key, speak, release — your words appear wherever your cursor is.
 
+<img width="207" height="115" alt="Screenshot 2026-01-15 at 02 36 09" src="https://github.com/user-attachments/assets/f5f6ed37-161a-4659-a60c-ea05f03cd196" />
+
+<img width="512" height="424" alt="Screenshot 2026-01-15 at 02 36 02" src="https://github.com/user-attachments/assets/b52ac5fd-07ee-4578-aa5f-8db3eb752453" />
+
 ## Features
 
 - **Press-and-hold activation** — Hold `fn` to record, release to transcribe
