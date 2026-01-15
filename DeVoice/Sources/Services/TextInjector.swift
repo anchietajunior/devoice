@@ -4,22 +4,19 @@ import Carbon.HIToolbox
 class TextInjector {
     func inject(text: String) {
         let pasteboard = NSPasteboard.general
-        let previousContent = pasteboard.string(forType: .string)
 
-        // Set new content
+        // Set transcribed text to clipboard
         pasteboard.clearContents()
         pasteboard.setString(text, forType: .string)
+
+        // Small delay to ensure clipboard is ready
+        usleep(50000) // 50ms
 
         // Simulate Cmd+V
         simulatePaste()
 
-        // Restore previous clipboard content after a delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-            if let previous = previousContent {
-                pasteboard.clearContents()
-                pasteboard.setString(previous, forType: .string)
-            }
-        }
+        // Note: We don't restore previous clipboard content
+        // This avoids race conditions and lets users paste the text again if needed
     }
 
     private func simulatePaste() {
