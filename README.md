@@ -17,23 +17,24 @@ A native macOS menu bar app that converts your voice to text using OpenAI's Whis
 
 ## Installation
 
-### Option 1: Build from source (recommended)
+### Download (Recommended)
+
+1. Download `DeVoice-x.x.x-macOS.zip` from the [Releases](https://github.com/yourusername/devoice/releases) page
+2. Unzip and drag `DeVoice.app` to your **Applications** folder
+3. **Important:** Right-click the app → **Open** (required for first launch to bypass Gatekeeper)
+4. Grant Accessibility permission when prompted (one-time setup)
+
+### Build from source
 
 ```bash
-# Clone the repository
 git clone https://github.com/yourusername/devoice.git
 cd devoice
 
-# Build the app
 ./scripts/build-app.sh
-
-# Install to Applications
 cp -r build/DeVoice.app /Applications/
 ```
 
-### Option 2: Download release
-
-Download the latest `DeVoice.app` from the [Releases](https://github.com/yourusername/devoice/releases) page and drag it to your Applications folder.
+> **Note for developers:** Rebuilding the app changes its signature, which may require re-granting Accessibility permission. This only affects development, not end users.
 
 ## Setup
 

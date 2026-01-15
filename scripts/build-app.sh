@@ -59,9 +59,18 @@ cat > "$APP_BUNDLE/Contents/Info.plist" << 'EOF'
 </plist>
 EOF
 
-# Ad-hoc sign the app (allows it to run without Gatekeeper issues)
+# Sign the app
 echo "🔏 Signing app..."
-codesign --force --deep --sign - "$APP_BUNDLE"
+
+# Try to use DeVoice Development certificate first, fall back to ad-hoc
+CERT_NAME="DeVoice Development"
+if security find-identity -v -p codesigning | grep -q "$CERT_NAME"; then
+    echo "   Using '$CERT_NAME' certificate"
+    codesign --force --deep --sign "$CERT_NAME" "$APP_BUNDLE"
+else
+    echo "   Using ad-hoc signature (run scripts/create-certificate.sh for persistent signing)"
+    codesign --force --deep --sign - "$APP_BUNDLE"
+fi
 
 echo ""
 echo "✅ Build complete: $APP_BUNDLE"
