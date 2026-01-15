@@ -11,12 +11,23 @@ enum KeychainHelper {
             kSecAttrService as String: "com.devoice.app"
         ]
 
-        SecItemDelete(query as CFDictionary)
+        // Check if item already exists
+        let existingStatus = SecItemCopyMatching(query as CFDictionary, nil)
 
-        var newQuery = query
-        newQuery[kSecValueData as String] = data
-
-        SecItemAdd(newQuery as CFDictionary, nil)
+        if existingStatus == errSecSuccess {
+            // Update existing item (single operation, no double prompt)
+            let updateQuery: [String: Any] = [
+                kSecValueData as String: data,
+                kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock
+            ]
+            SecItemUpdate(query as CFDictionary, updateQuery as CFDictionary)
+        } else {
+            // Add new item with accessibility setting
+            var newQuery = query
+            newQuery[kSecValueData as String] = data
+            newQuery[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlock
+            SecItemAdd(newQuery as CFDictionary, nil)
+        }
     }
 
     static func load(key: String) -> String? {
