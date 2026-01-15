@@ -4,22 +4,22 @@ struct FloatingOverlay: View {
     @ObservedObject var appState: AppState
 
     var body: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 8) {
             Circle()
                 .fill(stateColor)
-                .frame(width: 12, height: 12)
+                .frame(width: 10, height: 10)
 
             Text(stateText)
-                .font(.system(size: 13, weight: .medium))
+                .font(.system(size: 12, weight: .medium))
                 .foregroundColor(.white)
+                .lineLimit(1)
+                .fixedSize()
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 10)
+        .frame(width: 140, height: 32)
         .background(
             Capsule()
                 .fill(Color.black.opacity(0.85))
         )
-        .shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 5)
     }
 
     private var stateColor: Color {
@@ -36,11 +36,11 @@ struct FloatingOverlay: View {
     private var stateText: String {
         switch appState.state {
         case .idle:
-            return "Pronto"
+            return "Ready"
         case .recording:
-            return "Gravando..."
+            return "Recording..."
         case .processing:
-            return "Transcrevendo..."
+            return "Texting..."
         }
     }
 }

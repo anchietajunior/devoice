@@ -3,16 +3,17 @@ import SwiftUI
 
 class FloatingWindowController {
     private var window: NSWindow?
+    private var hostingView: NSHostingView<FloatingOverlay>?
     private let appState: AppState
+    private let windowSize = NSSize(width: 160, height: 40)
 
     init(appState: AppState) {
         self.appState = appState
+        createWindow()
     }
 
     func show() {
-        if window == nil {
-            createWindow()
-        }
+        positionWindow()
         window?.orderFront(nil)
     }
 
@@ -23,36 +24,35 @@ class FloatingWindowController {
     private func createWindow() {
         let contentView = FloatingOverlay(appState: appState)
 
-        let hostingView = NSHostingView(rootView: contentView)
-        hostingView.frame = CGRect(x: 0, y: 0, width: 180, height: 44)
+        let hosting = NSHostingView(rootView: contentView)
+        hosting.frame = NSRect(origin: .zero, size: windowSize)
+        hosting.autoresizingMask = []
 
-        let window = NSWindow(
-            contentRect: hostingView.frame,
-            styleMask: [.borderless],
+        let panel = NSPanel(
+            contentRect: NSRect(origin: .zero, size: windowSize),
+            styleMask: [.borderless, .nonactivatingPanel],
             backing: .buffered,
             defer: false
         )
 
-        window.contentView = hostingView
-        window.isOpaque = false
-        window.backgroundColor = .clear
-        window.level = .floating
-        window.collectionBehavior = [.canJoinAllSpaces, .stationary]
-        window.isMovableByWindowBackground = false
-        window.hasShadow = false
+        panel.contentView = hosting
+        panel.isOpaque = false
+        panel.backgroundColor = .clear
+        panel.level = .statusBar
+        panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+        panel.isMovableByWindowBackground = false
+        panel.hasShadow = false
+        panel.hidesOnDeactivate = false
 
-        positionWindow(window)
-
-        self.window = window
+        self.hostingView = hosting
+        self.window = panel
     }
 
-    private func positionWindow(_ window: NSWindow) {
-        guard let screen = NSScreen.main else { return }
+    private func positionWindow() {
+        guard let screen = NSScreen.main, let window = window else { return }
 
         let screenFrame = screen.visibleFrame
-        let windowFrame = window.frame
-
-        let x = screenFrame.maxX - windowFrame.width - 20
+        let x = screenFrame.maxX - windowSize.width - 20
         let y = screenFrame.minY + 20
 
         window.setFrameOrigin(NSPoint(x: x, y: y))
